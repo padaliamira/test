@@ -1,0 +1,36 @@
+CakePhp
+
+Tutorial : http://book.cakephp.org/2.0/en/tutorials-and-examples/blog/blog.html
+
+
+configuration of cakephp
+1. download cakephp version
+http://cakephp.org/
+
+2.extract zip file and put folder in c://wamp/www/(cakephp demo)
+
+3.run in localhost
+
+4.make changes according instructon
+	1. change security salt 
+			put random character or digit in security salt
+			
+	2.change security cipersalt
+			put random digit(only digit)
+			
+	3.change database credential according to you
+		put credential in $default
+		
+	4.database create
+		table:
+			1. First column must be id
+			2. Table name must be plural (eg: users , activitites etc)
+			3. 
+
+5. controller name is same as related table name (eg: usersController , activitiesController)
+
+6. Model name is same as table name but name is singular (eg : user , activity)
+
+7. View file must have .ctp extension
+
+8. app/view/layout/default.ctp -> template  file
