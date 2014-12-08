@@ -1,0 +1,115 @@
+//...............................generate random  integer number and insert in table...............................................// 
+
+UPDATE user_master SET salt=FLOOR(RAND(5)*1000)
+
+update password in encrypt form concate salt(column) and password(column)
+
+UPDATE user_master SET PASSWORD=MD5(CONCAT(salt,987654)) WHERE user_id='63'
+
+
+//...............................................switch case in query..................................................................//
+
+SELECT DATE_FORMAT(sheet.created_date, '%d-%m-%Y') AS created_date,sheet_data.contact_name,sheet_data.company_name,
+sheet_data.contact_number,sheet_data.contact_email,sheet_data.status,sheet_data.note,
+( CASE 
+	WHEN sheet_data.interest = '1' AND sheet.sheet_id = sheet_data.sheet_id THEN 'Yes'
+    ELSE 'No'   
+END ) AS interest FROM sheet 
+LEFT JOIN sheet_data ON sheet.sheet_id = sheet_data.sheet_id ORDER BY sheet.sheet_id desc
+
+
+//...............................................Query in field name..........................................................// 
+
+ $sheetList = $myDbObj->ADO_Select("sheet.*,(SELECT COUNT(*) FROM sheet_data WHERE sheet_id = sheet.sheet_id) AS record,
+			(SELECT COUNT(*) FROM sheet_data WHERE sheet_id = sheet.sheet_id AND sheet_data.status='voice message') AS voice_msg,
+			(SELECT COUNT(*) FROM sheet_data WHERE sheet_id = sheet.sheet_id AND sheet_data.status='interested') AS interested,
+			(SELECT COUNT(*) FROM sheet_data WHERE sheet_id = sheet.sheet_id AND sheet_data.status='not interested') AS not_interested,
+			(SELECT COUNT(*) FROM sheet_data WHERE sheet_id = sheet.sheet_id AND sheet_data.status='for future reference') AS future_reference,
+			(SELECT COUNT(*) FROM sheet_data WHERE sheet_id = sheet.sheet_id AND sheet_data.status='call me back') AS call_back", 
+			'sheet');
+			
+//..........................................Create database ..................................................................//
+
+$sql = "CREATE DATABASE IF NOT EXISTS myCoolDatabaseName";
+mysql_query($sql);
+
+//..................................................CREATE TABLE.............................................................//
+
+$sql = "CREATE TABLE IF NOT EXISTS `music` (
+`id` int(8) unsigned NOT NULL,
+`artist` text,
+`album` text,
+`title` text,
+`track` text,
+`year` varchar(8) DEFAULT NULL,
+PRIMARY KEY (`id`),
+FULLTEXT KEY `artist` (`artist`),
+FULLTEXT KEY `album` (`album`),
+FULLTEXT KEY `title` (`title`),
+FULLTEXT KEY `track` (`track`),
+FULLTEXT KEY `year` (`year`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+
+mysql_query($sql);
+
+//.................................................DROP TABLE...............................................................//
+
+$sql = "DROP TABLE IF EXISTS music";
+mysql_query($sql);
+
+//...........................................INSERT STATEMENTS................................................................//
+
+INSERT INTO table_name ( `col_A`, `col_B`, `col_C`) VALUES ( `col_A_data`, `col_B_data`, `col_C_data`) ;
+
+//......................................................ALTER table............................................................//
+
+$sql = "ALTER TABLE music MODIFY id int(8) unsigned NOT NULL AUTO_INCREMENT;";
+mysql_query($sql);
+
+//....................................................REPLACE STATEMENTS.......................................................//
+
+$sql = "REPLACE INTO music (id,artist,album) VALUES ('2','The Beatles','Let It Be')";
+mysql_query($sql);
+
+//......................................................UPDATE STATEMENTS...........................................................//
+
+$sql = "UPDATE music SET title='Come Together' WHERE id='1'";
+mysql_query($sql);
+
+//......................................................SELECT STATEMENTS.......................................................//
+
+$sql = "SELECT * FROM music WHERE 1;";
+mysql_query($sql);
+
+//.................................................................WHERE IN....................................................//
+
+$sql = "SELECT * FROM music WHERE track IN ('1','2');";
+mysql_query($sql);
+
+//................................................ORDER BY AND LIMIT.........................................................//
+
+$sql = "SELECT * FROM music WHERE 1 ORDER BY RAND() LIMIT 3;";
+mysql_query($sql);
+
+//................................................DISTINCT...........................................................................//
+
+$sql = "SELECT DISTINCT year FROM music WHERE 1;";
+mysql_query($sql);
+
+//...........................................MAX OF COLUMN VALUE.......................................................//
+
+$sql = "SELECT MAX(id) FROM music";
+mysql_query($sql);
+
+//..................................................DELETE STATEMENTS..........................................................//
+
+$sql = "DELETE FROM music WHERE album='rubber soul'";
+mysql_query($sql);
+
+//.................................................CONCAT TWO FIELD VALUE....................................................//
+
+SELECT 
+	CONCAT(user_master.firstname,' ',user_master.lastname) AS NAME,DATE(check_in_out.checkin_time) 
+FROM 
+	user_master 
+
